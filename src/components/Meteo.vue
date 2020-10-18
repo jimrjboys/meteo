@@ -1,0 +1,54 @@
+<template>
+<div class="container">
+    <h1 class="my-4">App meteo avec vue.js</h1>
+    <div class="form-group mb-5">
+        <label for="position">
+            Entrer le nom de votre ville
+        </label>
+        <input id="position" type="text" class="form-control" v-model="requete" v-on:keypress="geMeteo">
+    </div>
+    <div class="w-75 m-auto">
+        <h3 class="text-center">Position : Paris </h3>
+        <div class="card text-center p-5">
+            <p class="text-afficage">
+                Temperature : 20 °
+            </p>
+            <p class="text-afficage">
+                Temp :Nuageaux
+            </p>
+        </div>
+    </div>
+</div>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+    name: 'Meteo',
+    data() {
+        return {
+            requete: '',
+            temps: undefined,
+            api_code: 'e5eeea518b679ae55befc8cbb010b1fa',
+            url_recherche: 'https://api.openweathermap.org/data/2.5/weather?'
+        }
+    },
+    methods: {
+        geMeteo(e) {
+            if (e.key == "Enter") {
+                axios
+                    .get(`${this.url_recherche}q=${this.requete}&units=metric&APPID=${this.api_code}&lang=fr`)
+                    .then(reponse => {
+                        console.log(reponse)
+
+                    })
+            }
+        }
+    },
+}
+</script>
+
+<style>
+
+</style>
