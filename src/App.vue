@@ -15,5 +15,8 @@ export default {
 </script>
 
 <style>
-#app {}
+body {
+    background: #43c6ac;
+    background: linear-gradient(to right, #f8ffae, #43c6ac);
+}
 </style>

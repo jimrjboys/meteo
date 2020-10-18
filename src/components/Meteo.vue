@@ -5,7 +5,7 @@
         <label for="position">
             Entrer le nom de votre ville
         </label>
-        <input id="position" type="text" class="form-control" v-model="requete" v-on:keypress="geMeteo">
+        <input id="position" type="text" class="form-control" v-model="requete" @keypress.enter="geMeteo">
     </div>
     <div class="w-75 m-auto" v-if="temps">
         <h3 class="text-center">Position : {{ temps.name }} </h3>
@@ -35,17 +35,15 @@ export default {
         }
     },
     methods: {
-        geMeteo(e) {
-            if (e.key == "Enter") {
-                axios
-                    .get(`${this.url_recherche}q=${this.requete}&units=metric&APPID=${this.api_code}&lang=fr`)
-                    .then(reponse => {
-                        // console.log(reponse)
-                        this.temps = reponse.data;
-                        console.log(this.temps);
-                    })
-                this.requete = ''
-            }
+        geMeteo() {
+            axios
+                .get(`${this.url_recherche}q=${this.requete}&units=metric&APPID=${this.api_code}&lang=fr`)
+                .then(reponse => {
+                    // console.log(reponse)
+                    this.temps = reponse.data;
+                    console.log(this.temps);
+                })
+            this.requete = ''
         }
     },
 }
