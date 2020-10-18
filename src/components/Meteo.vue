@@ -7,14 +7,14 @@
         </label>
         <input id="position" type="text" class="form-control" v-model="requete" v-on:keypress="geMeteo">
     </div>
-    <div class="w-75 m-auto">
-        <h3 class="text-center">Position : Paris </h3>
+    <div class="w-75 m-auto" v-if="temps">
+        <h3 class="text-center">Position : {{ temps.name }} </h3>
         <div class="card text-center p-5">
             <p class="text-afficage">
-                Temperature : 20 °
+                Temperature : {{temps.main.temp.toFixed() }}
             </p>
             <p class="text-afficage">
-                Temp :Nuageaux
+                Temp : {{ temps.weather[0].description }}
             </p>
         </div>
     </div>
@@ -40,9 +40,11 @@ export default {
                 axios
                     .get(`${this.url_recherche}q=${this.requete}&units=metric&APPID=${this.api_code}&lang=fr`)
                     .then(reponse => {
-                        console.log(reponse)
-
+                        // console.log(reponse)
+                        this.temps = reponse.data;
+                        console.log(this.temps);
                     })
+                this.requete = ''
             }
         }
     },
@@ -50,5 +52,9 @@ export default {
 </script>
 
 <style>
-
+.text-afficage {
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 1.2;
+}
 </style>
